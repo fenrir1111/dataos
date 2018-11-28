@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+// http://bluewhaleusercenter.tpaas.youedata.com/swagger-ui.html#/%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86/listApplicationsUsingPOST
 // const baseURL = 'http://bluewhale.tpaas.youedata.com/dataos/'
 const baseURL = 'http://192.168.116.30:8765/dataos/'
 axios.defaults.baseURL = baseURL
