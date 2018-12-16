@@ -34,7 +34,7 @@
           <div class="system-title">电商后台管理系统</div>
           <div>
             <span class="welcome">
-              您好，{{$store.getters.username}}
+              <!-- 您好，{{loginParm.accountName}} -->
             </span>
             <el-button type="text" @click="logout">退出</el-button>
           </div>
@@ -51,12 +51,16 @@
 <script>
 /* eslint-disable */
 // import { getUserList, getMenus } from "@/api"
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       isCollapse: false,
       menuData: []
     }
+  },
+    computed: {
+    ...mapState['loginParm']
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -70,24 +74,25 @@ export default {
     },
     logout() {
       // 清除登录状态，即保存在localStorage中的token
-      localStorage.removeItem("mytoken")
+      localStorage.removeItem("accessToken")
       // 跳转到登录页面
       this.$router.push({ name: "Login" })
     }
   },
   created() {
-    getMenus().then(res => {
-      if (res.meta.status === 200) {
-        this.menuData = res.data
-        console.log(res.data)
-      }
-    })
+    // getMenus().then(res => {
+    //   if (res.meta.status === 200) {
+    //     this.menuData = res.data
+    //     console.log(res.data)
+    //   }
+    // })
   },
   mounted () {
-    let params = { params: { query: '', pagenum: 1, pagesize: 1 } }
-    getUserList(params).then(res => {
-      console.log(res)
-    })
+      console.log(this.loginParm)
+    // let params = { params: { query: '', pagenum: 1, pagesize: 1 } }
+    // getUserList(params).then(res => {
+    //   console.log(res)
+    // })
   }
 }
 </script>

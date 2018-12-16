@@ -20,7 +20,7 @@
 </template>
 <script>
 import {checkUser} from '@/api'
-
+import { mapState, mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -29,31 +29,34 @@ export default {
         accountPasswd: ''
       },
       rules: {
-        username: [
+        accountName: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [
+        accountPasswd: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
+    ...mapMutations(['saveParm']),
     loginSubmit (formName) {
       this.$refs[formName].validate(valide => {
         // 只有校验通过，才执行函数
         if (valide) {
           checkUser(this.form).then(res => {
+            console.log(res)
             // 如果成功要跳转至首页, 将token保存到localStorage, 将username保存到vuex的state中
-            if (res.meta.status === 200) {
-              localStorage.setItem('dataOsToken', res.result.datas.dataOsToken)
-              this.$store.commit('setUsername', res.data.username)
+            if (res.code === 0) {
+              localStorage.setItem('accessToken', res.result.datas.accessToken)
+              this.loginParm = res.result.datas
+              console.log(this.loginParm)
               this.$router.push({name: 'Home'})
             } else {
               // 如果失败，展示提示信息
               this.$message({
                 type: 'error',
-                message: res.meta.msg
+                message: res.msg
               })
             }
           })
@@ -62,6 +65,9 @@ export default {
         }
       })
     }
+  },
+  computed: {
+    ...mapState['loginParm']
   }
 }
 </script>

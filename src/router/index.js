@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import Home from '@/views/Home'
-// import Welcome from '@/views/welcome/Welcome'
+import Welcome from '@/views/welcome/Welcome'
 // import User from '@/views/user/User'
 // import Rights from '@/views/right/Rights'
 // import Roles from '@/views/right/Roles'
@@ -23,13 +23,13 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      redirect: {path: 'welcome'}
-      // children: [
-      //   {
-      //     name: 'Welcome',
-      //     path: 'welcome',
-      //     component: Welcome
-      //   }, {
+      children: [
+        {
+          name: 'Welcome',
+          path: 'welcome',
+          component: Welcome
+        }]
+      // {
       //     name: 'Users',
       //     path: 'users',
       //     component: User
